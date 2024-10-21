@@ -1,6 +1,9 @@
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     Hero.vy = -200
 })
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairNorth, function (sprite, location) {
+    ChangeLevel(Level_number)
+})
 function ChangeLevel (Level_number: number) {
     if (Level_number == 0) {
         tiles.setCurrentTilemap(tilemap`Indgang til via`)
@@ -12,10 +15,12 @@ function ChangeLevel (Level_number: number) {
     } else {
     	
     }
+    Level_number += 1
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.purpleSwitchUp, function (sprite, location) {
-    ChangeLevel(1)
+    ChangeLevel(Level_number)
 })
+let Level_number = 0
 let Hero: Sprite = null
 ChangeLevel(0)
 Hero = sprites.create(assets.image`Main guy`, SpriteKind.Player)
