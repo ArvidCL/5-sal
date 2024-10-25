@@ -17,7 +17,13 @@ function ChangeLevel (Level_number: number) {
         tiles.setCurrentTilemap(tilemap`Level 5`)
         tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
         Dragon = sprites.create(assets.image`Dragon`, SpriteKind.Enemy)
-        Big_Dragon = sprites.create(assets.image`Big Dragon`, SpriteKind.Player)
+        Big_Dragon = sprites.create(assets.image`Big Dragon`, SpriteKind.Enemy)
+        animation.runImageAnimation(
+        Big_Dragon,
+        assets.animation`Big dragon animation`,
+        500,
+        true
+        )
         tiles.placeOnRandomTile(Dragon, sprites.dungeon.hazardLava1)
         tiles.placeOnRandomTile(Big_Dragon, assets.tile`myTile5`)
     } else if (Level_number == 3) {
