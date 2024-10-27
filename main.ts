@@ -16,16 +16,13 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Majken, function (sprite, otherS
     game.showLongText("hvad er de første 2 decimaler i PI?", DialogLayout.Bottom)
     story.showPlayerChoices("79", "14", "25", "78")
     if (story.checkLastAnswer("79")) {
-        tiles.placeOnTile(Hero, tiles.getTileLocation(0, 60))
-        info.changeCountdownBy(10)
+        tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
         game.splash("FOKEERT!! 10 SEKUNDER STRAF TIL DIG")
     } else if (story.checkLastAnswer("25")) {
-        tiles.placeOnTile(Hero, tiles.getTileLocation(0, 60))
-        info.changeCountdownBy(10)
+        tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
         game.splash("FOKEERT!! 10 SEKUNDER STRAF TIL DIG")
     } else if (story.checkLastAnswer("78")) {
-        tiles.placeOnTile(Hero, tiles.getTileLocation(0, 60))
-        info.changeCountdownBy(10)
+        tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
         game.splash("FOKEERT!! 10 SEKUNDER STRAF TIL DIG")
     } else if (story.checkLastAnswer("14")) {
         mySprite2.sayText("SÅDAN! VI SES TIL TIMEN", 3000, false)
@@ -36,7 +33,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Majken, function (sprite, otherS
     pause(1000)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardLava0, function (sprite, location) {
-    game.gameOver(false)
+    tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
 })
 function ChangeLevel (Level_number: number) {
     if (Level_number == 0) {
@@ -47,7 +44,6 @@ function ChangeLevel (Level_number: number) {
         tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
         game.showLongText("Velkommen til 1.etage", DialogLayout.Bottom)
     } else if (Level_number == 2) {
-        pause(1000)
         tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
         scene.setBackgroundImage(img`
             ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -172,7 +168,7 @@ function ChangeLevel (Level_number: number) {
             3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
             `)
         tiles.setCurrentTilemap(tilemap`level21`)
-        game.showLongText("Velkommen til 2.etage. Pas Susanne hun er sur.", DialogLayout.Bottom)
+        game.showLongText("Velkommen til 2.etage. Pas på Susanne er sur. Hun kaster Demand and Supply kurve.", DialogLayout.Bottom)
         Amerikansk_fodboldspiller = sprites.create(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . 2 2 2 2 2 e . . . . 
@@ -197,26 +193,25 @@ function ChangeLevel (Level_number: number) {
         Susanne = sprites.create(assets.image`myImage0`, SpriteKind.Enemy)
         tiles.placeOnRandomTile(Susanne, sprites.builtin.field0)
         projectile2 = sprites.createProjectileFromSprite(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . 4 4 . . . . . . . 
-            . . . . . . 4 5 5 4 . . . . . . 
-            . . . . . . 2 5 5 2 . . . . . . 
-            . . . . . . . 2 2 . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . f f f . . 
+            . . . . . . . . . . . f . . . . 
+            . . . . . . . . . . . f f f . . 
+            . . . 7 . . . . . . . 8 . f . . 
+            . . . . 7 . . . . . 8 f f f . . 
+            . . . . . 7 . . . 8 . . . . . . 
+            . . . . . . 7 . 8 . . . . . . . 
+            . . . . . . . 8 . . . . . . . . 
+            . . . . . . 8 . 7 . . . . . . . 
+            . . . . . 8 . . . 7 . . . . . . 
+            . . . . 8 . . . . . 7 . f f . . 
+            . . . 8 . . . . . . . 7 f . f . 
+            . . . . . . . . . . . . f . f . 
+            . . . . . . . . . . . . f f . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             `, Susanne, 20, 0)
     } else if (Level_number == 3) {
-        sprites.destroy(Susanne)
-        sprites.destroy(Amerikansk_fodboldspiller)
+        game.showLongText("Velkommen til 3.etage. Husk svar rigtig på Majken spørgsmål. ", DialogLayout.Bottom)
         scene.setBackgroundImage(img`
             9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999966666699969999999999999999999999999999999999999999999999999999
             9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -340,7 +335,9 @@ function ChangeLevel (Level_number: number) {
             dddddddddd444ddddd3ddddddddddddd4ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd44dddddddddddddddddddddddddddddddddd4ddddddddd
             `)
         tiles.setCurrentTilemap(tilemap`level0`)
-        tiles.placeOnRandomTile(Hero, sprites.builtin.field1)
+        sprites.destroy(Susanne)
+        sprites.destroy(Amerikansk_fodboldspiller)
+        tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
         mySprite2 = sprites.create(img`
             . . . . f f f f . . . . . 
             . . f f f f f f f f . . . 
@@ -365,9 +362,16 @@ function ChangeLevel (Level_number: number) {
     } else if (Level_number == 4) {
     	
     } else if (Level_number == 5) {
+        game.showLongText("Velkommen til 5.etage. Du er der næsten. Skynd dig, men pas på dragerne", DialogLayout.Bottom)
         tiles.setCurrentTilemap(tilemap`Level 5`)
         tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
         Dragon = sprites.create(assets.image`Dragon`, SpriteKind.Enemy)
+        animation.runImageAnimation(
+        Dragon,
+        assets.animation`dragon fly`,
+        500,
+        true
+        )
         Big_Dragon = sprites.create(assets.image`Big Dragon`, SpriteKind.Enemy)
         projectile3 = sprites.createProjectileFromSprite(img`
             . 3 . . . . . . . . . . . 4 . . 
@@ -397,15 +401,22 @@ function ChangeLevel (Level_number: number) {
         tiles.placeOnRandomTile(Big_Dragon, assets.tile`myTile5`)
     }
 }
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.greenOuterSouth2, function (sprite, location) {
+    game.setGameOverEffect(true, effects.confetti)
+    pause(1000)
+    game.setGameOverMessage(true, "Du nåede det!!!")
+    pause(1000)
+    game.gameOver(true)
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.builtin.crowd4, function (sprite, location) {
-    game.gameOver(false)
+    tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
-    game.gameOver(false)
+    tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardLava1, function (sprite, location) {
     sprite.sayText("AAAV Det er varmt!!!!", 3000, false)
-    tiles.placeOnTile(sprite, tiles.getTileLocation(0, 60))
+    tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorLight5, function (sprite, location) {
     scene.cameraShake(4, 500)
@@ -416,10 +427,10 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.purpleSwitchUp, function 
     ChangeLevel(Level_number)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardHole, function (sprite, location) {
-    game.gameOver(false)
+    tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    game.gameOver(false)
+    tiles.placeOnRandomTile(Hero, sprites.dungeon.stairLadder)
 })
 let projectile3: Sprite = null
 let Big_Dragon: Sprite = null
@@ -445,29 +456,36 @@ scene.cameraFollowSprite(Hero)
 tiles.placeOnRandomTile(Hero, assets.tile`græs`)
 Hero.setStayInScreen(true)
 forever(function () {
+    if (Level_number == 3) {
+        mySprite2.setVelocity(randint(-40, 40), 0)
+        pause(2000)
+    }
+})
+forever(function () {
     if (Level_number == 2) {
         pause(2000)
         projectile2 = sprites.createProjectileFromSprite(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . 4 4 . . . . . . . 
-            . . . . . . 4 5 5 4 . . . . . . 
-            . . . . . . 2 5 5 2 . . . . . . 
-            . . . . . . . 2 2 . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . f f f . . 
+            . . . . . . . . . . . f . . . . 
+            . . . . . . . . . . . f f f . . 
+            . . . 7 . . . . . . . 8 . f . . 
+            . . . . 7 . . . . . 8 f f f . . 
+            . . . . . 7 . . . 8 . . . . . . 
+            . . . . . . 7 . 8 . . . . . . . 
+            . . . . . . . 8 . . . . . . . . 
+            . . . . . . 8 . 7 . . . . . . . 
+            . . . . . 8 . . . 7 . . . . . . 
+            . . . . 8 . . . . . 7 . f f . . 
+            . . . 8 . . . . . . . 7 f . f . 
+            . . . . . . . . . . . . f . f . 
+            . . . . . . . . . . . . f f . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             `, Susanne, -100, 0)
         pause(2000)
     }
     if (Level_number == 5) {
+        projectile3.setBounceOnWall(true)
         pause(2000)
         projectile3 = sprites.createProjectileFromSide(img`
             . 3 . . . . . . . . . . . 4 . . 
@@ -487,12 +505,6 @@ forever(function () {
             . 4 5 4 . . 4 4 4 . . . 4 4 . . 
             . 4 4 . . . . . . . . . . 4 4 . 
             `, randint(50, 100), randint(0, 10))
-        pause(2000)
-    }
-})
-forever(function () {
-    if (Level_number == 3) {
-        mySprite2.setVelocity(randint(-40, 40), 0)
         pause(2000)
     }
 })
